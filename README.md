@@ -1,4 +1,4 @@
-## learn_druid
+## Learn_Druid
 
 <p>Druid的部署环境</p>：
     JAVA开发，目前支持JDK7以上版本，以后将会支持JDK8以上版本，建议直接从JDK8以上开始。
