@@ -22,3 +22,21 @@ Druid的基本概念：
 2.数据摄入：Druid 提供两种数据摄入方式，如图1-3 所示，其中一种是实时数据摄入；另一种是批处理数据摄入。
 
 <img src="https://github.com/jiaming9844/learn_druid/blob/master/image/2017022015123158.jpg"/>
+
+3.数据查询：在数据查询方面，Druid原生采用的JSON格式，通过HTTP传送。Druid不支持标准的SQL语言查询，因为有些SQL语言查询并不适用Druid现在的设计。随着Druid应用越来越广泛，支持标准SQL的需求越来越重要，一些开源生态项目正在向这个方向努力，例如：Imply.io的PlyQL等。
+
+对于Druid 的查询访问，除了原生Java 客户端支持外，也出现了很多支持不同语言客户端访问的开源项目，例如Python、R、JavaScript 和Ruby 等。
+
+下面是一个用JSON 表达的查询例子，该查询中指定了时间范围、聚合粒度、数据源等。
+````
+{
+“queryType”: “timeseries”,
+“dataSource”: “sample_datasource”,
+“granularity”: “day”,
+“aggregations”: [
+{ “type”: “longSum”, “name”: “result_name”, “fieldName”: “field_name” }
+],
+“intervals”: [“2012-01-01T00:00:00.000/2012-01-04T00:00:00.000”],
+“context” : {“skipEmptyBuckets”: “true”}
+}
+````
