@@ -16,3 +16,4 @@ Druid的基本概念：
 
 （3）指标列：指标对应于OLAP 概念中的Fact，即用于聚合和计算的列。指标列字段通常为数值类型，计算操作通常包括Count、Sum 和Mean 等。指标通常是业务的关键量化指标，包括收入、使用时长等核心可度量和比较的指标。数据格式样例如图1-2 所示。
 
+  <img src="https://github.com/jiaming9844/learn_druid/blob/master/image/2017022015123066.jpg"/>
