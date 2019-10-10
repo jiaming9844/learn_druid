@@ -21,4 +21,4 @@ Druid的基本概念：
 
 2.数据摄入：Druid 提供两种数据摄入方式，如图1-3 所示，其中一种是实时数据摄入；另一种是批处理数据摄入。
 
-                                <img src="https://github.com/jiaming9844/learn_druid/blob/master/image/2017022015123158.jpg"/>
+<img src="https://github.com/jiaming9844/learn_druid/blob/master/image/2017022015123158.jpg"/>
