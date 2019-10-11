@@ -47,4 +47,13 @@ Druid的查询是通过给Broker Nodes发送HTTP POST请求（也可以直接给
   - Segment的不可修改性简化了Druid的实现，但是如果你有修改数据的需求，必须重新创建segment，而bitmap indexing的过程是比较耗时的；
   - Druid能接受的数据的格式相对简单，比如不能处理嵌套结构的数据
 
-
+# DATA
+````
+        timestamp             publisher          advertiser  gender  country  click  price
+        2011-01-01T01:01:35Z  bieberfever.com    google.com  Male    USA      0      0.65
+        2011-01-01T01:03:63Z  bieberfever.com    google.com  Male    USA      0      0.62
+        2011-01-01T01:04:51Z  bieberfever.com    google.com  Male    USA      1      0.45
+        2011-01-01T01:00:00Z  ultratrimfast.com  google.com  Female  UK       0      0.87
+        2011-01-01T02:00:00Z  ultratrimfast.com  google.com  Female  UK       0      0.99
+        2011-01-01T02:00:00Z  ultratrimfast.com  google.com  Female  UK       1      1.53
+````
