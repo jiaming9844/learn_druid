@@ -38,7 +38,9 @@ Druid的查询是通过给Broker Nodes发送HTTP POST请求（也可以直接给
   - Druid中的各个components之间耦合性低，如果不需要streaming data ingestion完全可以忽略realtime node；
   - Druid的数据单位Segment是不可修改的，我们的做法是生成新的segments替换现有的；
   - Druid使用Bitmap indexing加速column-store的查询速度，使用了一个叫做CONCISE的算法来对bitmap indexing进行压缩，使得生成的segments比原始文本文件小很多；
+  
 2.在我们的应用场景下（一共10几台机器，数据大概100列，行数是亿级别），平均查询时间<2秒，是同样机器数目的Mysql cluter的1/100 ~ 1/10；
+
 3.Druid的一些“局限”：
   - Segment的不可修改性简化了Druid的实现，但是如果你有修改数据的需求，必须重新创建segment，而bitmap indexing的过程是比较耗时的；
   - Druid能接受的数据的格式相对简单，比如不能处理嵌套结构的数据
