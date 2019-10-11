@@ -2,7 +2,7 @@
 
 https://my.oschina.net/hblt147/blog/3004623?device=geekTime.ios
 
-Segment: 
+## Segment: 
 
 Druid中有个重要的数据单位叫segment，其是Druid通过bitmap indexing从raw data生成的（batch or realtime）。segment保证了查询的速度。可以自己设置每个segment对应的数据粒度，这个应用中广告流量查询的最小粒度是天，所以每天的数据会被创建成一个segment。注意segment是不可修改的，如果需要修改，只能够修改raw data，重新创建segment了。
 
@@ -33,7 +33,7 @@ Druid的查询是通过给Broker Nodes发送HTTP POST请求（也可以直接给
 - Timeseries queries: 其统计满足filter条件的”rows”上某几列的聚合结果，相比”groupBy Queries”不指定基于哪几列进行聚合，效率更高;
 - TopN queries: 用于查询某一列上按照某种metric排序的最常见的N个values;
 
-# 总结
+## 总结
 
 1.Druid是一个开源的，分布式的，列存储的，适用于实时数据分析的系统，文档详细，易于上手；
   - Druid在设计时充分考虑到了Highly Available，各种nodes挂掉都不会使得druid停止工作（但是状态会无法更新）；
@@ -49,11 +49,34 @@ Druid的查询是通过给Broker Nodes发送HTTP POST请求（也可以直接给
 
 # DATA
 ````
-        timestamp             publisher          advertiser  gender  country  click  price
-        2011-01-01T01:01:35Z  bieberfever.com    google.com  Male    USA      0      0.65
-        2011-01-01T01:03:63Z  bieberfever.com    google.com  Male    USA      0      0.62
-        2011-01-01T01:04:51Z  bieberfever.com    google.com  Male    USA      1      0.45
-        2011-01-01T01:00:00Z  ultratrimfast.com  google.com  Female  UK       0      0.87
-        2011-01-01T02:00:00Z  ultratrimfast.com  google.com  Female  UK       0      0.99
-        2011-01-01T02:00:00Z  ultratrimfast.com  google.com  Female  UK       1      1.53
+  timestamp             publisher          advertiser  gender  country  click  price
+  2011-01-01T01:01:35Z  bieberfever.com    google.com  Male    USA      0      0.65
+  2011-01-01T01:03:63Z  bieberfever.com    google.com  Male    USA      0      0.62
+  2011-01-01T01:04:51Z  bieberfever.com    google.com  Male    USA      1      0.45
+  2011-01-01T01:00:00Z  ultratrimfast.com  google.com  Female  UK       0      0.87
+  2011-01-01T02:00:00Z  ultratrimfast.com  google.com  Female  UK       0      0.99
+  2011-01-01T02:00:00Z  ultratrimfast.com  google.com  Female  UK       1      1.53
 ````
+
+熟悉OLAP的同学，对以下这些概念一定不陌生，druid也把数据分为以下三个部分：
+
+Timestamp Column：将时间单独处理，是因为druid所有的操作都是围绕时间轴来进行的。
+
+Dimension Columns：维度字段，是数据的属性， 一般被用来过滤数据。上面的例子，我们有四个维度, publisher, advertiser, gender, country.  他们每一个都可以看是数据立方体的一个轴，都可以用来用来做横切。
+
+Metric Columns: 度量字段，是用来做聚合或者相关计算的。 上边的数据， click和price是俩个度量。度量是可以衡量的数据，一般可以有如下的操作，count ，sum等等
+
+## ROLL-UP
+roll-up （上卷）是olap的基本操作(除此之外还有下钻，切片等， 基本理论是一样的)。  在数据统计里，由于数据量太多，一般对细分的数据不是特别干兴趣，或者说没有太大关注的意义。但是按照维度的汇总或者统计，确实很有用的。druid通过一个roll-up的处理，将原始数据在注入的时候就进行汇总处理。roll-up 是在维度过滤之前的第一层聚合操作，如下：
+```
+GROUP BY timestamp, publisher, advertiser, gender, country
+  :: impressions = COUNT(1),  clicks = SUM(click),  revenue = SUM(price)
+```
+聚合后数据就变成了如下的样子
+```
+timestamp             publisher          advertiser  gender country impressions clicks revenue
+ 2011-01-01T01:00:00Z  ultratrimfast.com  google.com  Male   USA     1800        25     15.70
+ 2011-01-01T01:00:00Z  bieberfever.com    google.com  Male   USA     2912        42     29.18
+ 2011-01-01T02:00:00Z  ultratrimfast.com  google.com  Male   UK      1953        17     17.31
+ 2011-01-01T02:00:00Z  bieberfever.com    google.com  Male   UK      3194        170    34.01
+```
