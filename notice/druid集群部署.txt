@@ -32,3 +32,24 @@ bin/start-cluster-data-server
 5、启动查询服务器
 
 bin/start-cluster-query-server
+
+
+# Mysql作为metdata的配置方法。
+1、将master服务器中的/usr/local/druid/apache-druid-0.16.0-incubating/conf/druid/cluster/_common/common.runtime.properties配置文件中的
+  druid.extensions.loadList=["druid-hdfs-storage", "druid-kafka-indexing-service", "druid-datasketches","mysql-metadata-storage"]
+  添加"mysql-metadata-storage"
+  将# Metadata storage 中# For Derby server 注释掉，将mysql 部分打开（提前在MySQL中建好数据库）
+  # For MySQL (make sure to include the MySQL JDBC driver on the classpath):
+  druid.metadata.storage.type=mysql
+  druid.metadata.storage.connector.connectURI=jdbc:mysql://58.2.221.232:3306/druid
+  druid.metadata.storage.connector.user=druid
+  druid.metadata.storage.connector.password=druid
+
+2、下载mysql-connector-java-5.1.38.jar包到/usr/local/druid/apache-druid-0.16.0-incubating/extensions/mysql-metadata-storage
+文件夹下。
+
+3、启动master服务器即可。
+
+
+
+
