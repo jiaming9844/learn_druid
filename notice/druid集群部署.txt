@@ -1,5 +1,5 @@
 # Druid集群部署
-1、目前准备三台服务器分别为58.2.219.231，58.2.219.232，58.2.219.233。
+1、目前准备三台服务器分别为231，232，233。
 
 <https://druid.apache.org/docs/latest/tutorials/cluster.html>
 
@@ -18,7 +18,7 @@
 2、配置Zookeeper连接 
 在conf/druid/cluster/_common/common.runtime.properties文件中将druid.zk.service.host为 包含用逗号分隔的host：port对列表的连接字符串。如下：
 
-druid.zk.service.host=58.2.219.233:2181,58.2.219.232:2181,58.2.219.231:2181
+druid.zk.service.host=233:2181,232:2181,231:2181
 
 3、启动服务器
 如果在主服务器上运行ZK，则可以使用以下命令与ZK一起启动主服务器进程
@@ -41,9 +41,9 @@ bin/start-cluster-query-server
   将# Metadata storage 中# For Derby server 注释掉，将mysql 部分打开（提前在MySQL中建好数据库）
   # For MySQL (make sure to include the MySQL JDBC driver on the classpath):
   druid.metadata.storage.type=mysql
-  druid.metadata.storage.connector.connectURI=jdbc:mysql://58.2.221.232:3306/druid
-  druid.metadata.storage.connector.user=druid
-  druid.metadata.storage.connector.password=druid
+  druid.metadata.storage.connector.connectURI=jdbc:mysql://232:3306/dbname
+  druid.metadata.storage.connector.user=
+  druid.metadata.storage.connector.password=
 
 2、下载mysql-connector-java-5.1.38.jar包到/usr/local/druid/apache-druid-0.16.0-incubating/extensions/mysql-metadata-storage
 文件夹下。
