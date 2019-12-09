@@ -15,6 +15,15 @@
   lib/* -核心Druid的库和依赖项
   quickstart/*-与单机快速入门相关的文件
   
+   
+配置服务器对应的功能配置文件
+在每个服务器对应的配置页面下修改各自的runtime.properties文件，在文件的最后一行添加druid.host=ip
+master服务器修改conf/druid/cluster/master/coordinator-overlord/runtime.properties文件，在最后添加druid.host=.228
+data服务器修改/conf/druid/cluster/data/historical/runtime.properties和conf/druid/cluster/data/middleManager/runtime.properties文件，都在最后添加druid.host=.229
+query服务器修改conf/druid/cluster/query/broker/ runtime.properties文件和conf/druid/cluster/query/router/ runtime.properties文件，都在最后添加
+druid.host=.231
+
+  
 2、配置Zookeeper连接 
 在conf/druid/cluster/_common/common.runtime.properties文件中将druid.zk.service.host为 包含用逗号分隔的host：port对列表的连接字符串。如下：
 
