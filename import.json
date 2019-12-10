@@ -123,8 +123,8 @@
             "createTables": true,
             "host": "localhost",
             "port": 1527,
-            "connectURI": "jdbc:mysql://.232:3306/spbi",
-            "user": "spbi",
+            "connectURI": "jdbc:mysql://.232:3306/database",
+            "user": "database",
             "password": {
               "type": "default",
               "password": null
