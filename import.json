@@ -1,0 +1,179 @@
+{
+  "type": "index",
+  "id": "index_dm_ap_fact_2019-12-10T09:16:07.567Z",
+  "resource": {
+    "availabilityGroup": "index_dm_ap_fact_2019-12-10T09:16:07.567Z",
+    "requiredCapacity": 1
+  },
+  "spec": {
+    "dataSchema": {
+      "dataSource": "dm_ap_fact",
+      "parser": {
+        "parseSpec": {
+          "format": "timeAndDims",
+          "dimensionsSpec": {
+            "dimensionExclusions": [],
+            "dimensions": [
+              "id",
+              "ap_id",
+              "ap_line_id",
+              "invoice_id",
+              "invoice_line_id",
+              "po_id",
+              "po_line_id",
+              "pr_id",
+              "pr_title",
+              "p2p_type_id",
+              "p2p_type_desc",
+              "is_catalog",
+              "supplier_code",
+              "supplier_name",
+              "supplier_country",
+              "supplier_province",
+              "company_id",
+              "company_name",
+              "department_id",
+              "department_name",
+              "applicant_id",
+              "applicant_name",
+              "manager_id",
+              "manager_name",
+              "buyer_id",
+              "buyer_name",
+              "pr_create_date",
+              "po_create_date",
+              "ap_create_date",
+              "year",
+              "month",
+              "invoice_create_date",
+              "sku_id",
+              "sku_name",
+              "sku_spec",
+              "sku_unit",
+              "category_level1_id",
+              "category_level1_name",
+              "category_level2_id",
+              "category_level2_name",
+              "category_level3_id",
+              "category_level3_name",
+              "category_type_id",
+              "category_type",
+              "tax_rate",
+              "currency",
+              "local_currency",
+              "unit_price_pre_tax",
+              "unit_price",
+              "local_unit_price_pre_tax",
+              "local_unit_price",
+              "tax_amount",
+              "local_tax_amount",
+              "amount_pre_tax",
+              "amount",
+              "local_amount_pre_tax",
+              {
+                "name": "local_amount",
+                "type": "float"
+              },
+              {
+                "name": "quantity",
+                "type": "float"
+              },
+              "exchange_rate",
+              "one_time_flag",
+              "etl_date",
+              "modified_date"
+            ]
+          },
+          "timestampSpec": {
+            "format": "auto",
+            "column": "pr_create_date"
+          }
+        }
+      },
+      "metricsSpec": [],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "DAY",
+        "queryGranularity": {
+          "type": "none"
+        },
+        "rollup": false,
+        "intervals": null
+      },
+      "transformSpec": {
+        "filter": null,
+        "transforms": []
+      }
+    },
+    "ioConfig": {
+      "type": "index",
+      "firehose": {
+        "type": "sql",
+        "sqls": [
+          "SELECT * FROM dm_ap_fact"
+        ],
+        "maxCacheCapacityBytes": 1073741824,
+        "maxFetchCapacityBytes": 1073741824,
+        "prefetchTriggerBytes": 536870912,
+        "fetchTimeout": 60000,
+        "connectorConfig": null,
+        "sqlFirehoseDatabaseConnector": {
+          "type": "mysql",
+          "connectorConfig": {
+            "createTables": true,
+            "host": "localhost",
+            "port": 1527,
+            "connectURI": "jdbc:mysql://.232:3306/spbi",
+            "user": "spbi",
+            "password": {
+              "type": "default",
+              "password": null
+            },
+            "dbcp": null
+          }
+        }
+      },
+      "appendToExisting": false
+    },
+    "tuningConfig": {
+      "type": "index",
+      "maxRowsPerSegment": null,
+      "maxRowsInMemory": 1000000,
+      "maxBytesInMemory": 0,
+      "maxTotalRows": null,
+      "numShards": null,
+      "partitionDimensions": [],
+      "partitionsSpec": null,
+      "indexSpec": {
+        "bitmap": {
+          "type": "concise"
+        },
+        "dimensionCompression": "lz4",
+        "metricCompression": "lz4",
+        "longEncoding": "longs"
+      },
+      "indexSpecForIntermediatePersists": {
+        "bitmap": {
+          "type": "concise"
+        },
+        "dimensionCompression": "lz4",
+        "metricCompression": "lz4",
+        "longEncoding": "longs"
+      },
+      "maxPendingPersists": 0,
+      "forceGuaranteedRollup": false,
+      "reportParseExceptions": false,
+      "pushTimeout": 0,
+      "segmentWriteOutMediumFactory": null,
+      "logParseExceptions": false,
+      "maxParseExceptions": 2147483647,
+      "maxSavedParseExceptions": 0,
+      "buildV9Directly": true
+    }
+  },
+  "context": {
+    "forceTimeChunkLock": true
+  },
+  "groupId": "index_dm_ap_fact_2019-12-10T09:16:07.567Z",
+  "dataSource": "dm_ap_fact"
+}
