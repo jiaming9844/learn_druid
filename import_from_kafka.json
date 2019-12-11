@@ -1,0 +1,47 @@
+{
+  "type": "kafka",
+  "ioConfig": {
+    "type": "kafka",
+    "consumerProperties": {
+      "bootstrap.servers": "ip:9092,ip:9092,ip:9092"
+    },
+    "topic": "test"
+  },
+  "tuningConfig": {
+    "type": "kafka"
+  },
+  "dataSchema": {
+    "dataSource": "test",
+    "granularitySpec": {
+      "type": "uniform",
+      "segmentGranularity": "HOUR",
+      "queryGranularity": "HOUR",
+      "rollup": true
+    },
+    "parser": {
+      "type": "string",
+      "parseSpec": {
+        "format": "regex",
+        "timestampSpec": {
+          "column": "!!!_no_such_column_!!!",
+          "missingValue": "2010-01-01T00:00:00Z"
+        },
+        "pattern": "(.*)",
+        "columns": [
+          "column1"
+        ],
+        "dimensionsSpec": {
+          "dimensions": [
+            "column1"
+          ]
+        }
+      }
+    },
+    "metricsSpec": [
+      {
+        "name": "count",
+        "type": "count"
+      }
+    ]
+  }
+}
